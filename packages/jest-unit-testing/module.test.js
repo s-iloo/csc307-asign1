@@ -19,9 +19,8 @@ test("Testing contains numbers -- success", () => {
 });
 
 test("Testing contains number -- success", () => {
-  const expected = false;
   const got = mut.containsNumbers("hello");
-  expect(got).toBe(expected);
+  expect(got).toBeFalsy();
 });
 
 test("Testing contains numbers -- success", () => {
