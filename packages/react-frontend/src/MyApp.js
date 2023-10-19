@@ -7,9 +7,17 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
+    console.log("RIGHT BEFORE");
     fetchUsers()
-      .then((res) => res.json())
-      .then((json) => setCharacters(json["users_list"]))
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        const users = data;
+        console.log(users);
+        return users;
+      })
+      .then((json) => setCharacters(json))
       .catch((error) => {
         console.log(error);
       });
@@ -27,6 +35,7 @@ function MyApp() {
       .then((json) => {
         if (json) {
           console.log(json);
+
           setCharacters([...characters, json]);
           console.log("CHARS");
           console.log(characters);
@@ -42,8 +51,9 @@ function MyApp() {
     });
     console.log("index: " + index);
     console.log(character);
-    const cid = character[0]["id"];
-
+    const cid = character[0]._id;
+    console.log("HEREEEEEEBRUOOOO");
+    console.log(cid);
     const promise = await fetch(`http://localhost:8000/users/${cid}`, {
       method: "DELETE",
       headers: {
@@ -60,8 +70,8 @@ function MyApp() {
     return promise;
   }
 
-  function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
+  async function fetchUsers() {
+    const promise = await fetch("http://localhost:8000/users");
     return promise;
   }
   function updateList(person) {
